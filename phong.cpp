@@ -21,7 +21,7 @@
     #include    <GL/glxew.h>
 #endif
 
-#include    <glut.h>
+#include    <GL/glut.h>
 #include    <stdio.h>
 #include    <stdlib.h>
 #include	<string.h>
@@ -199,7 +199,8 @@ void display ()
 
     glUseProgramObjectARB ( program );
 	
-	glutSolidTeapot ( 2.5 );
+    //	glutSolidTeapot ( 2.5 );
+    	glutSolidCube ( 2.5 );
     
     glUseProgramObjectARB ( 0 );
 
@@ -259,7 +260,7 @@ void key ( unsigned char key, int x, int y )
 
 void	animate ()
 {
-	angle  = 0.004f * glutGet ( GLUT_ELAPSED_TIME );
+  angle  = 0.0004f * glutGet ( GLUT_ELAPSED_TIME );
 
 	light [0] = 2*cos ( angle );
 	light [1] = 3*sin ( 1.4 * angle );
@@ -278,7 +279,7 @@ int main ( int argc, char * argv [] )
 								// initialize glut
 	glutInit            ( &argc, argv );
 	glutInitDisplayMode ( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
-	glutInitWindowSize  ( 500, 500 );
+	glutInitWindowSize  ( 512, 512 );
 
 
 								// create window

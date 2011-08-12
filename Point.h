@@ -7,23 +7,30 @@ template<class T, int dim = 3>
 class PointTools {
   T & acc; //Accumulator.
 
- PointTools(T & start):acc(start){};
+ public:
+
+ PointTools(T & start):acc(start),epsilon(0.0001){};
 
   PointTools & set(T & new_acc){ acc=new_acc; return this; };
   T & get(){ return acc; };
 
-  PointTools & add(T & other){ LOOP(acc[i]+=other[i]); return *this; }
-  PointTools & sub(T & other){  LOOP(acc[i]-=other[i]); return *this; } 
-  PointTools & mul(float other){ LOOP(acc[i]*other); return *this; }
-  PointTools & div(float other){ LOOP(acc[i]*other); return *this; }
+  // Chainable:
+  PointTools & add(T & other) { LOOP(acc[i]+=other[i]); return *this; }
+  PointTools & sub(T & other) { LOOP(acc[i]-=other[i]); return *this; } 
+  PointTools & mul(float other) { LOOP(acc[i]*other); return *this; }
+  PointTools & div(float other) { LOOP(acc[i]*other); return *this; }
 
-  float dot(T & other){ float result = 0.0f; LOOP(result+=acc[i]*other[i]); return result; }
-  float length2(){ float result = 0.0f; LOOP(result+=acc[i]*acc[i]); return result; }
-  float length(){ return sqrt(length2()); }
- 
-  PointTools & cross();
+  // End of story:
+  float dot(T & other) { float result = 0.0f; LOOP(result+=acc[i]*other[i]); return result; }
+  float length2() { float result = 0.0f; LOOP(result+=acc[i]*acc[i]); return result; }
+  float length() { return sqrt(length2()); }
+  float zero() { return (length2() < epsilon); };
+
+  float epsilon;
+
+  //PointTools & cross();
 };
-
+/*
 //Now need to check if this stuff works.
 template<>
 PointTools<class T,3> & PointTools<class T,3>::cross(){
@@ -34,5 +41,5 @@ template<>
 PointTools<class T,2> &  PointTools<class T,2>::cross(){
   return *this;
 }
-
+*/
 #endif
